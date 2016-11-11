@@ -28,6 +28,7 @@ node {
         sh "docker push sschepensqcon/qcon:${gitCommit()}"
     }
 }
+
 stage 'Deploy'
 
 marathon(
@@ -36,5 +37,5 @@ marathon(
     credentialsId: 'dcos-token',
     filename: 'marathon.json',
     appId: 'nginx-yepi',
-    docker: "mesosphere/qcon:${gitCommit()}".toString()
+    docker: "sschepensqcon/qcon:${gitCommit()}".toString()
 )
