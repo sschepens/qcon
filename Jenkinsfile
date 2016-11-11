@@ -28,3 +28,13 @@ node {
         sh "docker push sschepensqcon/qcon:${gitCommit()}"
     }
 }
+stage 'Deploy'
+
+marathon(
+    url: 'http://marathon.mesos:8080',
+    forceUpdate: false,
+    credentialsId: 'dcos-token',
+    filename: 'marathon.json',
+    appId: 'nginx-yepi',
+    docker: "mesosphere/qcon:${gitCommit()}".toString()
+)
